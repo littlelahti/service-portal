@@ -1,46 +1,89 @@
-# Getting Started with Create React App
+# Service Portal Coding Exercise
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application using React + TypeScript + Material UI for the frontend, .NET 8 / C# for the backend, and PostgreSQL as the database. The project is fully Dockerized for easy local development and testing.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Wastebin Management (CRUD) with Material UI DataGrid
 
-### `npm start`
+- EF Core migrations and seeding for PostgreSQL
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Docker Compose setup for frontend, backend, and database
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Axios-based API calls from frontend, Swagger UI for backend API
 
-### `npm test`
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Frontend: React, TypeScript, Material UI, Axios
 
-### `npm run build`
+- Backend: .NET 9, C#, Entity Framework Core, PostgreSQL
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Database: PostgreSQL
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Containerization: Docker, Docker Compose
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
+### Prerequisites
 
-### `npm run eject`
+- Docker & Docker Compose installed
+- Node.js 18+ and npm/yarn (if running frontend locally)
+- .NET 9 SDK (if running backend locally)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Run with Docker Compose (Recommended)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Clone the repository:
+ ```bash
+ git clone <repo-url>
+ cd <repo-folder>
+ ```
+2. Build and start containers:
+  ```bash
+  docker-compose up --build
+  ```
+3. Access the apps in your browser:
+ - Frontend: `http://localhost:3000`
+ - Backend API: `http://localhost:5041/api`
+ > Backend waits for PostgreSQL to be healthy before starting.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Run locally without Docker
+__Backend:__
+```bash
+ cd backend
+ dotnet run
+ ```
+Ensure appsettings.json or environment variable points to your local PostgreSQL database. Run EF Core migrations if needed:
+```bash
+ dotnet ef database update
+ ```
+__Frontend:__
+```bash
+ cd frontend
+ npm install
+ npm run dev
+ ```
+__Database__
+- PostgreSQL database myappdb
+- Default user: postgres / postgres
+- EF Core Seeder automatically inserts initial user data on first run.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
+## Experience and Time Spent
+I spent around 12 - 14 hours on this project. However a lot of that time was spent debugging random issues I would get while setting up and running the project locally. For example, I was having issues with using dotnet tools: I kept getting errors that the tools weren't installed despite the tools being listed for global use. I also had issues with my API controllers on multiple occassions causing me to wipe the project and start from scratch three hours in. I still don't know what went wrong...
+Docker and axios were new to me, and while axios was pretty similar to fetch, Docker was something I spent some time fiddling with. 
+I'm sure my frontend could use more tidying up.. 😰
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Missing features
+Simulated user context was the big one I did not include, with the only reason that I realised too late that it was required for the task. ): I also was not sure about what format 'EmptyingSchedule' was supposed to be like, so I left it as a string, which just acts like a note.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## External Help
+- ChatGPT
+  Biggest help here. Helped with project set up (commands and the general idea), Docker yaml files, lots and lots of debugging help for especially as another "pair of eyes".
+- [Material UI Templates](https://mui.com/material-ui/getting-started/templates/)
+  MUI's CRUD dashboard template did a lot of heavy lifting for the frontend
+- [Microsoft Documentation](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-9.0&tabs=visual-studio-code)
+  Web API references. And found `dotnet-aspnet-codegenerator` from these documentations. Made controllers so much easier.
+- StackOverflow Forums
+  What would I do without these people?
+- [Bruno](https://www.usebruno.com/)
+  REST API Client for testing.
